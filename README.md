@@ -99,6 +99,8 @@ The agent is only as useful as what it can see. These are wired in through MCP s
 | Playwright | Playwright MCP | executes the generated manual test cases against a running build and reports pass/fail |
 | Redash | the `redash` skill | numbers from the analytics warehouse without touching the primary |
 
+Two personal projects push the same ideas further. [unreal-atlas-mcp](https://github.com/rabihkodeih/unreal-atlas-mcp) is an MCP server for Unreal Engine 5 built code-execution-first: one `execute_python` tool that runs a script inside the editor, plus ten helpers, instead of a catalogue of hundreds of fine-grained tools. [godot_game](https://github.com/rabihkodeih/godot_game) is a Godot 4 horror prototype built with a director/worker pipeline: the director model writes contracts and reviews, worker agents get one contracted micro-task each, and a headless verification suite is the only merge gate.
+
 The Jira and Slack ones changed my day the most. Session start used to be twenty minutes of reading. Now the agent pulls the overnight threads, the ticket comments and the CI results, and I start from a summary I can interrogate.
 
 ## 6. Models and delegation
