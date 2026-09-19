@@ -1,0 +1,1 @@
+Human-only file. Agents read this, never edit it.
