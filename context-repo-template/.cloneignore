@@ -1,0 +1,13 @@
+# rsync filter rules applied by scripts/clone-ws.sh (first match wins). Paths are relative to the workspace root.
+- /.git
+- /archive/
+- /.claude/settings.local.json
++ /outbox/
++ /outbox/README.md
+- /outbox/**
++ /plans/
++ /plans/README.md
+- /plans/**
++ /packages/
++ /packages/README.md
+- /packages/**

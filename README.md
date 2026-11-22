@@ -10,7 +10,7 @@ Everything here is sanitised. No employer code, no client names, no internal tic
 
 ```
 README.md                 this write-up
-context-repo-template/    skeleton of a per-project context repo, copy it and go
+context-repo-template/    a self-contained project workspace, clone it and go
 skills/                   fifteen Claude Code skills I use daily, generalised
 ```
 
@@ -26,11 +26,13 @@ It has three kinds of files and the split is by how often they change:
 | `mother-context.md` | every session | current state: plan, tickets in flight, decisions, open questions, a dated log |
 | `domain-knowledge.md` | rarely | how the domain works, each claim tagged with where it came from and how sure I am |
 
-Plus `outbox/` for anything drafted for a human that has not been sent, `plans/` for per-ticket plan files (deleted once merged), and `human-notes.txt` which the agent is told never to edit.
+Plus `dev-workflow.md` for how code changes are made (section 2), `outbox/` for anything drafted for a human that has not been sent, `plans/` for per-task plan files (deleted once merged), `scripts/` for small helpers, `packages/` for code built inside the workspace, and `human-notes.txt` which the agent is told never to edit.
+
+Code lives either in `packages/` (small tools and libraries that belong to the project) or in sibling repos next to the workspace (anything a team shares). A package that outgrows the workspace graduates to its own repo. An issue tracker is optional: without one, tasks are named by a slug and tracked in `mother-context.md`.
 
 The boundary rule between the two big files is the thing that keeps it working: a settled fact about how the world works goes in `domain-knowledge.md`, the current state of my work goes in `mother-context.md`. When they disagree, domain knowledge wins on mechanics, mother context wins on "what is happening now".
 
-The template is in [`context-repo-template/`](context-repo-template/). The files are short on purpose. `AGENTS.md` routes to the knowledge files, it is not itself the library.
+The template is in [`context-repo-template/`](context-repo-template/). Start a project with `context-repo-template/scripts/clone-ws.sh context-repo-template ~/projects/<name>`; the same script spins off a per-task clone of a running workspace when work goes parallel. The files are short on purpose. `AGENTS.md` routes to the knowledge files, it is not itself the library.
 
 ## 2. The daily loop
 
@@ -40,7 +42,7 @@ Same thing every day, in this order:
 2. `/ingest-context`: the agent reads `AGENTS.md`, `mother-context.md`, `domain-knowledge.md` and says back where things stand.
 3. Feed in what happened overnight: Slack threads, emails, Jira comments. MCP servers for Jira, Confluence, Slack, SonarQube and AWS mean the agent can pull most of this itself.
 4. Grill it. "What changed, what is blocked, what would you do first." If the answer is wrong, the context is wrong, fix the context before doing any work.
-5. Do the work. Plan file per ticket, implement, run tests locally, self-review, QA test cases, QA run.
+5. Do the work, following `dev-workflow.md`: worktree per task, a coder and a unit-test-writer subagent working from one spec without seeing each other's output, subagent review, lint, one real run of the change, commit and push the side branch, CI green. PRs are opt-in per repo. QA under a per-stack lock is opt-in, for projects with a shared long-running stack. Several tasks run as parallel pipelines.
 6. Drafts for every open thread go to `outbox/`. I read them, I send them.
 7. Update `mother-context.md` in place. Revise sections, do not append.
 8. Close the session.
@@ -53,7 +55,7 @@ These are hard rules in every `AGENTS.md`. They are not about trust in the model
 
 - **Humans own all communications.** The agent drafts, I send. Slack, email, Jira comments, PR replies, all of it.
 - **Production edits are human-only.** Prod DB skills are read-only and enforced server-side. Prod config in admin tools is typed by a person.
-- **Commits and pushes are mine.** The agent stages nothing without being asked and never pushes.
+- **Merges are mine.** Outside a coding pipeline the agent commits nothing unless asked. Inside one, `dev-workflow.md` lets it commit and push its own task branch (and open a PR where a repo opts in); it merges only when asked.
 - **Never edit `human-notes.txt`.** A place for me to leave notes the agent reads but cannot touch.
 - **Verified vs inferred, always.** Every claim in a report says which it is and where it came from. No manufactured findings to look thorough.
 

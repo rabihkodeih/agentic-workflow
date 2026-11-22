@@ -1,18 +1,17 @@
 # Mother context: <project>
 
-> Volatile layer. Revise in place. Last update: <date>.
+> **Volatile state layer.** Durable mechanics live in `domain-knowledge.md` (authoritative for *how things work*); this file is authoritative for *what's happening now*. Revise in place, don't append. All times UTC unless stated.
 
-## State
-- Where things are right now, in three or four lines.
+**Situation now (<date>):** The ask, who asked, the deadline, and where things stand, in three or four lines.
 
 ## Plan
 1. Next step.
 2. Step after.
 
-## Tickets in flight
-| Ticket | What | Status | Next |
-|---|---|---|---|
-| | | | |
+## Tasks in flight
+| Task | What | Branch | Status | Next |
+|---|---|---|---|---|
+| | | | | |
 
 ## Decisions
 - <date>: decision, and who made it.
@@ -20,7 +19,7 @@
 ## Open questions
 - Question, and who can answer it.
 
-## Log
+## Timeline (milestones only)
 | Date | What |
 |---|---|
 | | |

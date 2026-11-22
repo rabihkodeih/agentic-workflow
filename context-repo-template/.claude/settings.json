@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch *)",
+      "Bash(git grep *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git worktree list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh run view *)",
+      "Bash(scripts/qa-lock.sh status *)"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push --force-with-lease *)",
+      "Bash(git reset --hard *)",
+      "Bash(git branch -D *)",
+      "Bash(git clean -f *)",
+      "Bash(rm -rf ~ *)",
+      "Bash(rm -rf / *)"
+    ]
+  }
+}
